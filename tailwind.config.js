@@ -1,6 +1,8 @@
-import defaultTheme from "tailwindcss/defaultTheme";
+import defaultThemeCjs from "tailwindcss/defaultTheme";
 import colors from "tailwindcss/colors";
 import typography from "@tailwindcss/typography";
+
+const defaultTheme = defaultThemeCjs?.default ?? defaultThemeCjs;
 
 /** @type {import('tailwindcss').Config} */
 export default {
