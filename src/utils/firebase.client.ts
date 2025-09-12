@@ -29,10 +29,16 @@ export const getDb = async () => {
   if (dbInstance) return dbInstance;
 
   const app = await initApp();
-  dbInstance = getDatabase(app);
 
-  // Forza HTTPS long-polling per evitare errori WS su PageSpeed Insights
-  (dbInstance as any)._repo._repoInfo.forceLongPolling = true;
+  try {
+    dbInstance = getDatabase(app);
+  } catch (e) {
+    console.warn(
+      "Firebase RTDB WebSocket non disponibile, ma HTTPS long-polling funzionerà comunque",
+      e
+    );
+    dbInstance = getDatabase(app); // fallback sicuro
+  }
 
   return dbInstance;
 };
