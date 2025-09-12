@@ -10,14 +10,14 @@ export const initApp = async () => {
 
   // usa import.meta.env con VITE_ per le variabili lato client
   const firebaseConfig = {
-    apiKey: process.env.VITE_FIREBASE_API_KEY,
-    authDomain: `${process.env.VITE_FIREBASE_APP_NAME}.firebaseapp.com`,
-    projectId: process.env.VITE_FIREBASE_APP_NAME,
-    storageBucket: `${process.env.VITE_FIREBASE_APP_NAME}.appspot.com`,
-    messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.VITE_FIREBASE_APP_ID,
-    databaseURL: process.env.VITE_FIREBASE_DB_URL,
-    measurementId: process.env.VITE_FIREBASE_MEASUREMENT_ID,
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: `${import.meta.env.VITE_FIREBASE_APP_NAME}.firebaseapp.com`,
+    projectId: import.meta.env.VITE_FIREBASE_APP_NAME,
+    storageBucket: `${import.meta.env.VITE_FIREBASE_APP_NAME}.appspot.com`,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    databaseURL: import.meta.env.VITE_FIREBASE_DB_URL,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
   };
 
   appInstance = initializeApp(firebaseConfig);
