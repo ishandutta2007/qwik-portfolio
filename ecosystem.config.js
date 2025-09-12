@@ -26,7 +26,7 @@ module.exports = {
     production: {
       user: "www-data",
       host: "139.59.143.5",
-      ref: "origin/main",
+      ref: "origin/master",
       repo: "git@github.com:micio86dev/qwik-portfolio.git",
       path: "/var/www/html/micio86/source",
       "post-deploy":
