@@ -6,7 +6,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 import { SITE } from "./src/config.mjs";
 
-const path = require("path");
+import path from "path";
 
 process.env = { ...process.env, ...loadEnv("ssr", process.cwd()) };
 
