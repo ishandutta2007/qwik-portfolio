@@ -1,13 +1,10 @@
-import defaultThemeCjs from "tailwindcss/defaultTheme.js";
-import colors from "tailwindcss/colors.js";
-import typography from "@tailwindcss/typography";
-
 /** @type {import('tailwindcss').Config} */
 
-// fallback per Bun + jiti
-const defaultSans = defaultThemeCjs?.default?.sans || defaultThemeCjs.sans;
+const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
+const typography = require("@tailwindcss/typography");
 
-export default {
+module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
@@ -29,7 +26,7 @@ export default {
         secondary: colors.gray,
       },
       fontFamily: {
-        sans: [...defaultSans],
+        sans: [...defaultTheme.sans],
       },
     },
   },
