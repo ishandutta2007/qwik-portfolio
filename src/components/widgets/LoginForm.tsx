@@ -1,9 +1,5 @@
 import { component$, useStore, $, useContext } from "@builder.io/qwik";
 import InputText from "~/components/atoms/InputText";
-import {
-  signInWithEmailAndPassword,
-  browserSessionPersistence,
-} from "firebase/auth";
 import { UserInformationContext } from "~/root";
 
 interface Credentials {
@@ -15,10 +11,7 @@ interface Credentials {
 
 export default component$(() => {
   const store = useStore<Credentials>({
-    form: {
-      email: "",
-      password: "",
-    },
+    form: { email: "", password: "" },
   });
 
   const currentUser = useContext(UserInformationContext);
@@ -26,26 +19,32 @@ export default component$(() => {
   const login = $(async () => {
     const { getAuthInstance } = await import("~/utils/firebase.client");
     const auth = await getAuthInstance();
-    auth.setPersistence(browserSessionPersistence);
-    signInWithEmailAndPassword(auth, store.form.email, store.form.password);
+
+    const {
+      signInWithEmailAndPassword,
+      browserSessionPersistence,
+      setPersistence,
+    } = await import("firebase/auth");
+
+    await setPersistence(auth, browserSessionPersistence);
+    await signInWithEmailAndPassword(
+      auth,
+      store.form.email,
+      store.form.password
+    );
   });
 
   return (
     <>
-      {currentUser.isLogged === false && (
-        <form
-          class="login"
-          method="post"
-          preventdefault:submit
-          onSubmit$={login}
-        >
+      {!currentUser.isLogged && (
+        <form class="login" preventdefault:submit onSubmit$={login}>
           <div class="row">
             <InputText
               name="email"
               label="E-Mail"
               placeholder="E-Mail"
               value={store.form.email}
-              required={true}
+              required
               on-input={$((ev: any) => (store.form.email = ev.target.value))}
             />
             <InputText
@@ -54,7 +53,7 @@ export default component$(() => {
               label="Password"
               placeholder="Password"
               value={store.form.password}
-              required={true}
+              required
               on-input={$((ev: any) => (store.form.password = ev.target.value))}
             />
           </div>
