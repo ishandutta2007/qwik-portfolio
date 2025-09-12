@@ -11,7 +11,7 @@ export default component$(() => (
         alt="miciodev Logo"
         srcset="/images/icon.svg"
       />
-      @miciodev
+      MicioDev
     </picture>
   </span>
 ));
