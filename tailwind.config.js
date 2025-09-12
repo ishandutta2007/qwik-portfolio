@@ -1,7 +1,12 @@
 import defaultThemeCjs from "tailwindcss/defaultTheme.js";
 import colors from "tailwindcss/colors.js";
+import typography from "@tailwindcss/typography";
 
 /** @type {import('tailwindcss').Config} */
+
+// fallback per Bun + jiti
+const defaultSans = defaultThemeCjs?.default?.sans || defaultThemeCjs.sans;
+
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
@@ -24,10 +29,10 @@ export default {
         secondary: colors.gray,
       },
       fontFamily: {
-        sans: [...(defaultThemeCjs?.default?.sans ?? defaultThemeCjs.sans)],
+        sans: [...defaultSans],
       },
     },
   },
-  plugins: [import("@tailwindcss/typography")],
+  plugins: [typography],
   darkMode: "class",
 };
