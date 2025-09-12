@@ -21,6 +21,13 @@ module.exports = {
     },
   },
   plugins: ["@typescript-eslint"],
+  overrides: [
+    {
+      files: ["*.cjs", "*.mjs", "ecosystem.config.*"],
+      parser: "espree",
+      rules: {},
+    },
+  ],
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   apps: [
     {
       name: "portfolio",
@@ -13,7 +13,8 @@ module.exports = {
         VITE_FIREBASE_APP_NAME: "portfolio-a52ee",
         VITE_FIREBASE_MEASUREMENT_ID: "G-N02R44P8NB",
         VITE_FIREBASE_MESSAGING_SENDER_ID: "923208738119",
-        VITE_FIREBASE_DB_URL: "https://portfolio-a52ee-default-rtdb.europe-west1.firebasedatabase.app"
+        VITE_FIREBASE_DB_URL:
+          "https://portfolio-a52ee-default-rtdb.europe-west1.firebasedatabase.app",
       },
       error_file: "./logs/err.log",
       out_file: "./logs/out.log",
@@ -29,7 +30,7 @@ module.exports = {
       repo: "git@github.com:micio86dev/qwik-portfolio.git",
       path: "/var/www/html/micio86",
       "post-deploy":
-        "cp .env.production .env && bun i && bun run build && pm2 restart ecosystem.config.cjs --env production --name portfolio",
+        'cp .env.production .env && bun i && bun run build && pm2 start "bun run start" --name portfolio',
       ssh_options: "StrictHostKeyChecking=no",
     },
   },
