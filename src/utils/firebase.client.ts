@@ -1,8 +1,8 @@
 // firebase.client.ts
 import { getDatabase } from "firebase/database";
-import { getAuth } from "firebase/auth";
 
-let appInstance: any;
+let appInstance: any = null;
+let authInstance: any = null;
 
 export const initApp = async () => {
   if (appInstance) return appInstance;
@@ -29,7 +29,12 @@ export const getDb = async () => {
   return getDatabase(app);
 };
 
+// Lazy-load Auth solo quando serve
 export const getAuthInstance = async () => {
-  const app = await initApp();
-  return getAuth(app);
+  if (!authInstance) {
+    const app = await initApp();
+    const { getAuth } = await import("firebase/auth");
+    authInstance = getAuth(app);
+  }
+  return authInstance;
 };
