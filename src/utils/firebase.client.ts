@@ -1,14 +1,14 @@
+// firebase.client.ts
 import { getDatabase } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
-let appInstance: any; // cache singleton
+let appInstance: any;
 
 export const initApp = async () => {
   if (appInstance) return appInstance;
 
   const { initializeApp } = await import("firebase/app");
 
-  // usa import.meta.env con VITE_ per le variabili lato client
   const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
     authDomain: `${import.meta.env.VITE_FIREBASE_APP_NAME}.firebaseapp.com`,

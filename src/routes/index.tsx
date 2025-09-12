@@ -5,7 +5,6 @@ import {
   useStore,
 } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import { getDb } from "~/utils/firebase";
 import { ref, onValue } from "firebase/database";
 import { SITE } from "~/config.mjs";
 import type { Skill } from "~/types";
@@ -30,6 +29,7 @@ export default component$(() => {
   const currentUser = useContext(UserInformationContext);
 
   useVisibleTask$(async () => {
+    const { getDb } = await import("~/utils/firebase.client");
     const db = await getDb();
     const skills = ref(db, "skills");
 

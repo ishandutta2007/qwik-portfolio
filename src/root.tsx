@@ -12,7 +12,6 @@ import {
   RouterOutlet,
   ServiceWorkerRegister,
 } from "@builder.io/qwik-city";
-import { getAuthInstance } from "~/utils/firebase";
 
 import { RouterHead } from "~/components/core/RouterHead";
 import { DarkThemeLauncher } from "~/components/core/DarkThemeLauncher";
@@ -89,6 +88,7 @@ export default component$(() => {
   useContextProvider(TextsContext, textStore);
 
   useVisibleTask$(async () => {
+    const { getAuthInstance } = await import("~/utils/firebase.client");
     const auth = await getAuthInstance();
 
     onAuthStateChanged(auth, () => {

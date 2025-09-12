@@ -1,6 +1,5 @@
 import { component$, useStore, $, useContext } from "@builder.io/qwik";
 import { ref, update } from "firebase/database";
-import { getDb } from "~/utils/firebase";
 import { NewsContext } from "~/root";
 import InputText from "~/components/atoms/InputText";
 import InputTextarea from "~/components/atoms/InputTextarea";
@@ -21,6 +20,7 @@ export default component$((props: NewsProps) => {
   });
 
   const mod = $(async () => {
+    const { getDb } = await import("~/utils/firebase.client");
     const db = await getDb();
     const news = ref(db, `news/${store.form.id}`);
     const result = await update(news, store.form);

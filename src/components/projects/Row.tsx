@@ -6,7 +6,6 @@ import {
   useContext,
 } from "@builder.io/qwik";
 import { ref, remove } from "firebase/database";
-import { getDb } from "~/utils/firebase";
 import md from "markdown-it";
 import type { Project } from "~/types";
 import { UserInformationContext, ProjectsContext } from "~/root";
@@ -26,6 +25,7 @@ export default component$((props: ProjectsRowProps) => {
   const showSureDel = useSignal(false);
 
   const del = $(async () => {
+    const { getDb } = await import("~/utils/firebase.client");
     const db = await getDb();
     const projects = ref(db, `/projects/${store.item.id}`);
     return remove(projects);

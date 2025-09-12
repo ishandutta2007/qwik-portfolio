@@ -1,6 +1,5 @@
 import { component$, useSignal, useStore, $ } from "@builder.io/qwik";
 import { ref, push } from "firebase/database";
-import { getDb } from "~/utils/firebase";
 import InputText from "~/components/atoms/InputText";
 import InputTextarea from "~/components/atoms/InputTextarea";
 import type { Customer } from "~/types";
@@ -21,6 +20,7 @@ export default component$(() => {
   });
 
   const create = $(async () => {
+    const { getDb } = await import("~/utils/firebase.client");
     const db = await getDb();
     const customers = ref(db, "customers");
     const result = await push(customers, store.form);

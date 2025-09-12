@@ -7,7 +7,6 @@ import {
   $,
 } from "@builder.io/qwik";
 import type { Text } from "~/types";
-import { getDb } from "~/utils/firebase";
 import { ref, onValue } from "firebase/database";
 import md from "markdown-it";
 import { UserInformationContext, TextsContext } from "~/root";
@@ -41,6 +40,7 @@ export default component$((props: TermProps) => {
     let interval: any = null;
 
     if (props.name) {
+      const { getDb } = await import("~/utils/firebase.client");
       const db = await getDb();
       const text = ref(db, `texts/${props.name}`);
 
