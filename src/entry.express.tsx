@@ -7,6 +7,7 @@
  * - https://qwik.builder.io/docs/deployments/node/
  *
  */
+import "dotenv/config";
 import {
   createQwikCity,
   type PlatformNode,
