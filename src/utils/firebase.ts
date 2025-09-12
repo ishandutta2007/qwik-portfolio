@@ -1,24 +1,23 @@
 import { getDatabase } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
-const env = import.meta.env;
-
-let appInstance: any; // per cache singleton
+let appInstance: any; // cache singleton
 
 export const initApp = async () => {
   if (appInstance) return appInstance;
 
   const { initializeApp } = await import("firebase/app");
 
+  // usa import.meta.env con VITE_ per le variabili lato client
   const firebaseConfig = {
-    apiKey: env._FIREBASE_API_KEY,
-    authDomain: `${env._FIREBASE_APP_NAME}.firebaseapp.com`,
-    projectId: env._FIREBASE_APP_NAME,
-    storageBucket: `${env._FIREBASE_APP_NAME}.appspot.com`,
-    messagingSenderId: env._FIREBASE_MESSAGING_SENDER_ID,
-    appId: env._FIREBASE_APP_ID,
-    databaseURL: env._FIREBASE_DB_URL,
-    measurementId: env._FIREBASE_MEASUREMENT_ID,
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: `${import.meta.env.VITE_FIREBASE_APP_NAME}.firebaseapp.com`,
+    projectId: import.meta.env.VITE_FIREBASE_APP_NAME,
+    storageBucket: `${import.meta.env.VITE_FIREBASE_APP_NAME}.appspot.com`,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    databaseURL: import.meta.env.VITE_FIREBASE_DB_URL,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID, // refuso corretto
   };
 
   appInstance = initializeApp(firebaseConfig);
