@@ -3,6 +3,7 @@ import { getDatabase } from "firebase/database";
 
 let appInstance: any = null;
 let authInstance: any = null;
+let dbInstance: any = null;
 
 export const initApp = async () => {
   if (appInstance) return appInstance;
@@ -25,13 +26,15 @@ export const initApp = async () => {
 };
 
 export const getDb = async () => {
+  if (dbInstance) return dbInstance;
+
   const app = await initApp();
-  try {
-    return getDatabase(app);
-  } catch (e) {
-    console.warn("Firebase RTDB WS failed, fallback to HTTPS long-polling", e);
-    return getDatabase(app); // comunque funziona
-  }
+  dbInstance = getDatabase(app);
+
+  // Forza HTTPS long-polling per evitare errori WS su PageSpeed Insights
+  (dbInstance as any)._repo._repoInfo.forceLongPolling = true;
+
+  return dbInstance;
 };
 
 // Lazy-load Auth solo quando serve
