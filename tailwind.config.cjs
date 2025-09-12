@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 const typography = require("@tailwindcss/typography");
 
@@ -26,7 +25,21 @@ module.exports = {
         secondary: colors.gray,
       },
       fontFamily: {
-        sans: [...defaultTheme.sans],
+        // default sans manuale, funziona sempre con Bun
+        sans: [
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol",
+        ],
       },
     },
   },
