@@ -1,8 +1,5 @@
-import defaultThemeCjs from "tailwindcss/defaultTheme";
-import colors from "tailwindcss/colors";
-import typography from "@tailwindcss/typography";
-
-const defaultTheme = defaultThemeCjs?.default ?? defaultThemeCjs;
+import defaultThemeCjs from "tailwindcss/defaultTheme.js";
+import colors from "tailwindcss/colors.js";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -27,10 +24,10 @@ export default {
         secondary: colors.gray,
       },
       fontFamily: {
-        sans: [...defaultTheme.sans],
+        sans: [...(defaultThemeCjs?.default?.sans ?? defaultThemeCjs.sans)],
       },
     },
   },
-  plugins: [typography],
+  plugins: [import("@tailwindcss/typography")],
   darkMode: "class",
 };
