@@ -29,17 +29,24 @@ export const getDb = async () => {
   if (dbInstance) return dbInstance;
 
   const app = await initApp();
-
   const db = getDatabase(app);
 
-  // For headless browser (Insight use Lighthouse)
-  if (navigator.userAgent.includes("HeadlessChrome")) {
+  // Solo lato client
+  if (
+    typeof window !== "undefined" &&
+    navigator.userAgent.includes("HeadlessChrome")
+  ) {
     console.log("Disabilito WebSocket per PageSpeed Insights");
-    // Firebase RTDB fallback on HTTPS long-polling
-    (db as any)._repo._repoInfo.forceLongPolling = true; // potrebbe ancora dare TS warning ma funziona
+    // Qui puoi forzare long-polling, se necessario
+    try {
+      (db as any)._repo._repoInfo.forceLongPolling = true;
+    } catch (e) {
+      console.warn("Cannot force long-polling:", e);
+    }
   }
 
-  return db;
+  dbInstance = db;
+  return dbInstance;
 };
 
 // Lazy-load Auth solo quando serve
