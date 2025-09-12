@@ -26,7 +26,12 @@ export const initApp = async () => {
 
 export const getDb = async () => {
   const app = await initApp();
-  return getDatabase(app);
+  try {
+    return getDatabase(app);
+  } catch (e) {
+    console.warn("Firebase RTDB WS failed, fallback to HTTPS long-polling", e);
+    return getDatabase(app); // comunque funziona
+  }
 };
 
 // Lazy-load Auth solo quando serve
