@@ -31,7 +31,7 @@ module.exports = {
       repo: "git@github.com:micio86dev/qwik-portfolio.git",
       path: "/var/www/html/micio86",
       "post-deploy":
-        'cp .env.production .env && bun i && bun run build && pm2 restart server/entry.express.mjs --name portfolio',
+        'cp .env.production .env && bun i && bun run build && pm2 restart server/entry.express.js --name portfolio',
       ssh_options: "StrictHostKeyChecking=no",
     },
   },
