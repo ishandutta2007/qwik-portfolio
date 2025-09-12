@@ -2,8 +2,8 @@
 import { getDatabase } from "firebase/database";
 
 let appInstance: any = null;
-let authInstance: any = null;
 let dbInstance: any = null;
+let authInstance: any = null;
 
 export const initApp = async () => {
   if (appInstance) return appInstance;
@@ -29,23 +29,9 @@ export const getDb = async () => {
   if (dbInstance) return dbInstance;
 
   const app = await initApp();
-  const db = getDatabase(app);
+  dbInstance = getDatabase(app);
 
-  // Solo lato client
-  if (
-    typeof window !== "undefined" &&
-    navigator.userAgent.includes("HeadlessChrome")
-  ) {
-    console.log("Disabilito WebSocket per PageSpeed Insights");
-    // Qui puoi forzare long-polling, se necessario
-    try {
-      (db as any)._repo._repoInfo.forceLongPolling = true;
-    } catch (e) {
-      console.warn("Cannot force long-polling:", e);
-    }
-  }
-
-  dbInstance = db;
+  // Nessun forcing lato server, evita crash SSR
   return dbInstance;
 };
 
@@ -53,8 +39,15 @@ export const getDb = async () => {
 export const getAuthInstance = async () => {
   if (!authInstance) {
     const app = await initApp();
-    const { getAuth } = await import("firebase/auth");
+    const { getAuth, browserSessionPersistence } = await import(
+      "firebase/auth"
+    );
     authInstance = getAuth(app);
+
+    // Solo lato client
+    if (typeof window !== "undefined") {
+      authInstance.setPersistence(browserSessionPersistence);
+    }
   }
   return authInstance;
 };
