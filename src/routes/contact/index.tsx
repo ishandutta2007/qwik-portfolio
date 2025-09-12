@@ -5,7 +5,7 @@ import {
   useVisibleTask$,
 } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import { ref, onValue } from "firebase/database";
 import type { Contact } from "~/types";
 import { SITE } from "~/config.mjs";
@@ -24,12 +24,13 @@ export default component$(() => {
     {
       contacts: undefined,
     },
-    { deep: true },
+    { deep: true }
   );
 
   const currentUser = useContext(UserInformationContext);
 
-  useVisibleTask$(() => {
+  useVisibleTask$(async () => {
+    const db = await getDb();
     const contacts = ref(db, "contacts");
 
     onValue(contacts, (snapshot) => {

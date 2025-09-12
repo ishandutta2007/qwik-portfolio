@@ -1,5 +1,5 @@
 import { component$, useStore, $, useContext } from "@builder.io/qwik";
-import { auth } from "~/utils/firebase";
+import { getAuthInstance } from "~/utils/firebase";
 import InputText from "~/components/atoms/InputText";
 import {
   signInWithEmailAndPassword,
@@ -24,7 +24,8 @@ export default component$(() => {
 
   const currentUser = useContext(UserInformationContext);
 
-  const login = $(() => {
+  const login = $(async () => {
+    const auth = await getAuthInstance();
     auth.setPersistence(browserSessionPersistence);
     signInWithEmailAndPassword(auth, store.form.email, store.form.password);
   });

@@ -1,6 +1,6 @@
 import { component$, useStore, $, useContext } from "@builder.io/qwik";
 import { ref, update } from "firebase/database";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import { SkillsContext } from "~/root";
 import InputText from "~/components/atoms/InputText";
 import InputRange from "~/components/atoms/InputRange";
@@ -21,6 +21,7 @@ export default component$((props: SkillsProps) => {
   });
 
   const mod = $(async () => {
+    const db = await getDb();
     const skills = ref(db, `skills/${store.form.id}`);
     const result = await update(skills, store.form);
 
@@ -45,7 +46,7 @@ export default component$((props: SkillsProps) => {
           value={store.form.percentage}
           required={true}
           on-input={$(
-            (ev: any) => (store.form.percentage = parseInt(ev.target.value)),
+            (ev: any) => (store.form.percentage = parseInt(ev.target.value))
           )}
         />
       </div>

@@ -1,8 +1,9 @@
 import type { New } from "~/types";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import { ref, get, onValue } from "firebase/database";
 
 const load = async () => {
+  const db = await getDb();
   const news = ref(db, "news");
   const res = (await get(news)).val() as any;
   _news = res

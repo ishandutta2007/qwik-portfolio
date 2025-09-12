@@ -1,6 +1,6 @@
 import { component$, useSignal, useStore, $ } from "@builder.io/qwik";
 import { ref, push } from "firebase/database";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import InputText from "~/components/atoms/InputText";
 import InputRange from "~/components/atoms/InputRange";
 import type { Skill } from "~/types";
@@ -21,6 +21,7 @@ export default component$(() => {
   });
 
   const create = $(async () => {
+    const db = await getDb();
     const skills = ref(db, "skills");
     const result = await push(skills, store.form);
 
@@ -55,8 +56,7 @@ export default component$(() => {
               value={store.form.percentage}
               required={true}
               on-input={$(
-                (ev: any) =>
-                  (store.form.percentage = parseInt(ev.target.value)),
+                (ev: any) => (store.form.percentage = parseInt(ev.target.value))
               )}
             />
           </div>

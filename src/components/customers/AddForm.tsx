@@ -1,6 +1,6 @@
 import { component$, useSignal, useStore, $ } from "@builder.io/qwik";
 import { ref, push } from "firebase/database";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import InputText from "~/components/atoms/InputText";
 import InputTextarea from "~/components/atoms/InputTextarea";
 import type { Customer } from "~/types";
@@ -21,6 +21,7 @@ export default component$(() => {
   });
 
   const create = $(async () => {
+    const db = await getDb();
     const customers = ref(db, "customers");
     const result = await push(customers, store.form);
 
@@ -80,7 +81,7 @@ export default component$(() => {
               value={store.form.description}
               required={true}
               on-input={$(
-                (ev: any) => (store.form.description = ev.target.value),
+                (ev: any) => (store.form.description = ev.target.value)
               )}
             />
           </div>

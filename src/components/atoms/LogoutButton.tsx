@@ -1,13 +1,14 @@
 import { component$, $, useContext } from "@builder.io/qwik";
-import { auth } from "~/utils/firebase";
+import { getAuthInstance } from "~/utils/firebase";
 import { UserInformationContext } from "~/root";
 
 export default component$(() => {
   const currentUser = useContext(UserInformationContext);
 
-  const logout = $(() => {
+  const logout = $(async () => {
     currentUser.email = "";
     currentUser.isLogged = false;
+    const auth = await getAuthInstance();
     auth.signOut();
   });
 

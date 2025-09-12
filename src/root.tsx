@@ -12,7 +12,7 @@ import {
   RouterOutlet,
   ServiceWorkerRegister,
 } from "@builder.io/qwik-city";
-import { auth } from "~/utils/firebase";
+import { getAuthInstance } from "~/utils/firebase";
 
 import { RouterHead } from "~/components/core/RouterHead";
 import { DarkThemeLauncher } from "~/components/core/DarkThemeLauncher";
@@ -88,7 +88,9 @@ export default component$(() => {
   useContextProvider(SkillsContext, skillStore);
   useContextProvider(TextsContext, textStore);
 
-  useVisibleTask$(() => {
+  useVisibleTask$(async () => {
+    const auth = await getAuthInstance();
+
     onAuthStateChanged(auth, () => {
       const user = noSerialize({ ...auth.currentUser });
       if (user?.email) {

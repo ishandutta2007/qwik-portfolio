@@ -1,8 +1,9 @@
 import type { Project } from "~/types";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import { ref, get, onValue } from "firebase/database";
 
 const load = async () => {
+  const db = await getDb();
   const projects = ref(db, "projects");
   const res = (await get(projects)).val() as any;
   _projects = res
@@ -32,7 +33,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
 };
 
 export const findProjectBySlug = async (
-  slug: string,
+  slug: string
 ): Promise<Project | null> => {
   if (!slug) return null;
 

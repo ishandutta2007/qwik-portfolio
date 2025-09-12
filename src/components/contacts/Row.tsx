@@ -6,7 +6,7 @@ import {
   useContext,
 } from "@builder.io/qwik";
 import { ref, remove } from "firebase/database";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import type { Contact } from "~/types";
 import { UserInformationContext } from "~/root";
 import Confirm from "../atoms/Confirm";
@@ -22,7 +22,8 @@ export default component$((props: ContactsRowProps) => {
   const currentUser = useContext(UserInformationContext);
   const showSureDel = useSignal(false);
 
-  const del = $(() => {
+  const del = $(async () => {
+    const db = await getDb();
     const contacts = ref(db, `/contacts/${store.item.id}`);
     return remove(contacts);
   });

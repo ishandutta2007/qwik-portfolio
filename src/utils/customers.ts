@@ -1,8 +1,9 @@
 import type { Customer } from "~/types";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import { ref, get, onValue } from "firebase/database";
 
 const load = async () => {
+  const db = await getDb();
   const customers = ref(db, "customers");
   const res = (await get(customers)).val() as any;
   _customers = res
@@ -32,7 +33,7 @@ export const fetchCustomers = async (): Promise<Customer[]> => {
 };
 
 export const findCustomerBySlug = async (
-  slug: string,
+  slug: string
 ): Promise<Customer | null> => {
   if (!slug) return null;
 

@@ -7,7 +7,7 @@ import {
   $,
 } from "@builder.io/qwik";
 import type { Text } from "~/types";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import { ref, onValue } from "firebase/database";
 import md from "markdown-it";
 import { UserInformationContext, TextsContext } from "~/root";
@@ -37,10 +37,11 @@ export default component$((props: TermProps) => {
     textStore.openedId = store.item.id;
   });
 
-  useVisibleTask$(() => {
+  useVisibleTask$(async () => {
     let interval: any = null;
 
     if (props.name) {
+      const db = await getDb();
       const text = ref(db, `texts/${props.name}`);
 
       onValue(text, (snapshot) => {

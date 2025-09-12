@@ -6,7 +6,7 @@ import {
   useContext,
 } from "@builder.io/qwik";
 import { ref, remove } from "firebase/database";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import md from "markdown-it";
 import type { Customer } from "~/types";
 import { UserInformationContext, CustomersContext } from "~/root";
@@ -25,7 +25,8 @@ export default component$((props: CustomersRowProps) => {
   const customerStore = useContext(CustomersContext);
   const showSureDel = useSignal(false);
 
-  const del = $(() => {
+  const del = $(async () => {
+    const db = await getDb();
     const customers = ref(db, `/customers/${store.item.id}`);
     return remove(customers);
   });

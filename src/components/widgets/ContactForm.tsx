@@ -1,6 +1,6 @@
 import { component$, useStore, $, useContext } from "@builder.io/qwik";
 import { ref, push } from "firebase/database";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import InputText from "~/components/atoms/InputText";
 import InputTextarea from "~/components/atoms/InputTextarea";
 import { UserInformationContext } from "~/root";
@@ -23,6 +23,7 @@ export default component$(() => {
   const currentUser = useContext(UserInformationContext);
 
   const send = $(async () => {
+    const db = await getDb();
     const contacts = ref(db, "contacts");
     const result = await push(contacts, store.form);
 

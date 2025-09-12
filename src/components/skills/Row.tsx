@@ -6,7 +6,7 @@ import {
   useContext,
 } from "@builder.io/qwik";
 import { ref, remove } from "firebase/database";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import type { Skill } from "~/types";
 import { UserInformationContext, SkillsContext } from "~/root";
 import Confirm from "../atoms/Confirm";
@@ -24,7 +24,8 @@ export default component$((props: SkillsRowProps) => {
   const skillStore = useContext(SkillsContext);
   const showSureDel = useSignal(false);
 
-  const del = $(() => {
+  const del = $(async () => {
+    const db = await getDb();
     const skills = ref(db, `/skills/${store.item.id}`);
     return remove(skills);
   });

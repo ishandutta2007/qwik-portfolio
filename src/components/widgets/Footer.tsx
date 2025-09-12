@@ -55,14 +55,14 @@ export default component$(() => {
           </ul>
 
           <div class="text-sm text-gray-700 mr-4 dark:text-slate-400">
-            <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[url(/images/icon.webp)]"></span>
+            <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[url(/images/icon.svg)]"></span>
             Made by{" "}
             <a
               class="text-secondary-700 hover:underline dark:text-gray-200"
               href="https://github.com/micio86dev"
             >
               {" "}
-              micio86dev
+              @miciodev
             </a>
             · All rights reserved.
           </div>

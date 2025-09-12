@@ -5,7 +5,7 @@ import {
   useContext,
 } from "@builder.io/qwik";
 import { DocumentHead } from "@builder.io/qwik-city";
-import { db } from "~/utils/firebase";
+import { getDb } from "~/utils/firebase";
 import { ref, onValue } from "firebase/database";
 import type { Project } from "~/types";
 import { SITE } from "~/config.mjs";
@@ -24,12 +24,13 @@ export default component$(() => {
     {
       projects: undefined,
     },
-    { deep: true },
+    { deep: true }
   );
 
   const currentUser = useContext(UserInformationContext);
 
-  useVisibleTask$(() => {
+  useVisibleTask$(async () => {
+    const db = await getDb();
     const projects = ref(db, "projects");
 
     onValue(projects, (snapshot) => {
