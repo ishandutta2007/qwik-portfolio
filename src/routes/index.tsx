@@ -71,6 +71,7 @@ export default component$(() => {
               width="581"
               height="581"
               alt="Avatar"
+              fetchpriority="high"
               srcset="/images/avatar-mini.webp"
             />
           </picture>
