@@ -73,6 +73,8 @@ export default component$(() => {
               alt="Avatar"
               srcset="/images/avatar-mini.webp"
               fetchPriority="high"
+              decoding="async"
+              loading="eager"
             />
           </picture>
         </div>
