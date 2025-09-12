@@ -28,7 +28,7 @@ module.exports = {
       host: "139.59.143.5",
       ref: "origin/master",
       repo: "git@github.com:micio86dev/qwik-portfolio.git",
-      path: "/var/www/html/micio86/source",
+      path: "/var/www/html/micio86",
       "post-deploy":
         "bun i && bun run build && pm2 reload ecosystem.config.js --only portfolio",
       ssh_options: "StrictHostKeyChecking=no",
