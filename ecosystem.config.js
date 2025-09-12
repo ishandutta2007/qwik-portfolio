@@ -21,7 +21,6 @@ module.exports = {
       autorestart: true,
     },
   ],
-
   deploy: {
     production: {
       user: "www-data",
